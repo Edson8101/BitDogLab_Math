@@ -1,7 +1,5 @@
 # BitDogLab_Math
 
- Projeto da Disciplina de Sistemas Embarcados
+Projeto da Disciplina de Sistemas Embarcados
 
- Exemplo aqui
-
-Fazendo um teste escrevendo diretamente no repositório do Github
+Tópicos em Eletrônica é uma disciplina da pós-graduação da FEEC-UNICAMP ofertada pelo professor Fabiano Fruett. O objetivo da matéria é desenvolver projetos que envolva IoT, eletrônica e IA com o intuito de levar ferramentas para os alunos do ensino fundamental e médio utilizando a abordagem STEM (Science, Technology, Education and Mathematics). Este repositório tem por objetivo compartilhar todos os códigos e ideias desenvolvidos durante o semestre.
