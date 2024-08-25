@@ -40,6 +40,19 @@ alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2]
 rosto_feliz = [6,8,15,23,22,21,19]
 rosto_triste = [6,8,24,16,17,18,20]
 
+def pergunta01():
+    # Desligar todos os LEDs
+    for i in range(NUM_LEDS):
+        np[i] = (0, 0, 0)
+
+    question01 = [20, 18, 12, 6, 4]
+
+    for i in question01:
+        np[i] = (20, 20, 20)
+        np.write()
+        time.sleep(15)
+
+
 def opcoes():
     b=0
     escolha = True
@@ -106,6 +119,7 @@ while True:
             oled.text("Questao {}".format(c+1), 0, 10)
             oled.show()
             if button_a.value() == 0:
+                pergunta01()
                 opcoes()
     
     # Esperar um pouco antes da próxima leitura
