@@ -47,7 +47,7 @@ for i in range(NUM_LEDS):
     np[i] = (0, 0, 0)
 
 for i in range(NUM_LEDS):
-    np[i] = (20, 20, 20)
+    np[i] = (2, 2, 2)
     np.write()
     time.sleep(0.1)
 
@@ -98,7 +98,7 @@ tocar_musica(musica_super_mario)
 mat = [24,15,14,5,4,6,12,8,0,9,10,19,20]
 
 for i in mat:
-    np[i] = (0,20,0)
+    np[i] = (0,2,0)
     np.write()
     time.sleep(0.1)
     
@@ -106,7 +106,7 @@ for i in range(NUM_LEDS):
     np[i] = (0, 0, 0)
 
 for i in rosto_feliz:
-    np[i] = (0,20,0)
+    np[i] = (0,2,0)
     np.write()
 
 time.sleep(0.5)
@@ -114,7 +114,7 @@ time.sleep(0.5)
 np[6] = (0,0,0)
 np.write()
 time.sleep(0.2)
-np[6] = (0,20,0)
+np[6] = (0,2,0)
 np.write()
 
 time.sleep(3)
@@ -128,18 +128,18 @@ oled = SSD1306_I2C(128, 64, i2c)
 class Question(): 
     
     def pergunta01(self):
-        # Desligar todos os LEDs
+        # Suponhando que a matriz de LED seja um gráfico com coordenadas (x,y), qual é o tipo de função apresentada? 
         for i in range(NUM_LEDS):
             np[i] = (0, 0, 0)
 
         question01 = [24, 16, 12, 8, 0]
 
         for i in question01:
-            np[i] = (20, 20, 20)
+            np[i] = (2, 2, 2)
             np.write()
     
     def pergunta02(self):
-        
+        # Qual é a probabilidade de escolher um LED com a cor vermelha entre todas as cores apresentadas na matriz de LED?
         for i in range(NUM_LEDS):
             np[i] = (0, 0, 0)
 
@@ -148,13 +148,13 @@ class Question():
         blue = [10,11,13,14,16,17,22,23,24]
         
         for i in red:
-            np[i] = (20, 0, 0)
+            np[i] = (2, 0, 0)
             np.write()
         for i in green:
-            np[i] = (0, 20, 0)
+            np[i] = (0, 2, 0)
             np.write()
         for i in blue:
-            np[i] = (0, 0, 20)
+            np[i] = (0, 0, 2)
             np.write()   
                 
     def pergunta03(self):
@@ -214,7 +214,7 @@ def opcoes(alternativa_correta):
             np[i] = (0, 0, 0)
  
         for i in alternativa[b]:
-            np[i] = (0, 20, 0)
+            np[i] = (0, 2, 0)
             np.write()
             
         if button_a.value() == 0:
@@ -222,12 +222,12 @@ def opcoes(alternativa_correta):
                 np[i] = (0, 0, 0)
             if b==alternativa_correta:
                 for i in rosto_feliz:
-                    np[i]=(0,20,0)
+                    np[i]=(0,2,0)
                     np.write()
                 time.sleep(2)
             else:
                 for i in rosto_triste:
-                    np[i]=(20,0,0)
+                    np[i]=(2,0,0)
                     np.write()
                 time.sleep(2)
                     
@@ -254,8 +254,8 @@ while True:
     # Teste OLED
     oled.fill(0)  # Limpar display
     oled.text("PERGUNTA", 0, 0)
-    oled.text("Para escolher", 0, 20)
-    oled.text("Pressione (A)", 0, 30)
+    oled.text("(A) Selecionar", 0, 20)
+    oled.text("(B) Voltar", 0, 30)
 
     for i in lista:
         if i == c:
