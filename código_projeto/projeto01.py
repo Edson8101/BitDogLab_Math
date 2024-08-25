@@ -37,6 +37,9 @@ LED_MATRIX = [
 
 alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2],[23,22,21,16,13,6,3,1,2],[23,22,16,13,6,3,18,11,8,2],[23,22,21,16,13,6,3,1,12,2]]
 
+rosto_feliz = [6,8,15,23,22,21,19]
+rosto_triste = [6,8,24,16,17,18,20]
+
 def opcoes():
     b=0
     escolha = True
@@ -59,9 +62,23 @@ def opcoes():
             np[i] = (0, 0, 0)
  
         for i in alternativa[b]:
-            np[i] = (0, 50, 0)
-            np.write()         
-
+            np[i] = (0, 20, 0)
+            np.write()
+            
+        if button_a.value() == 0:
+            for i in range(NUM_LEDS):
+                np[i] = (0, 0, 0)
+            if b==3:
+                for i in rosto_feliz:
+                    np[i]=(0,20,0)
+                    np.write()
+                time.sleep(2)
+            else:
+                for i in rosto_triste:
+                    np[i]=(20,0,0)
+                    np.write()
+                time.sleep(2)
+                    
         if button_b.value() == 0:
             escolha = False
     # Esperar um pouco antes da próxima leitura
