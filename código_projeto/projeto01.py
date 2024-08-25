@@ -4,7 +4,126 @@ import time
 from ssd1306 import SSD1306_I2C
 import utime
 
-#Aqui temos uma classe onde as 10 perguntas estão armazenadas
+# ==============================  DECLARAÇÃO DE VARIÁVEIS =======================================
+
+# Inicializar ADC para os pinos VRx (GPIO26) e VRy (GPIO27)
+adc_vrx = ADC(Pin(26))
+adc_vry = ADC(Pin(27))
+
+# Configuração dos botões
+button_a = Pin(5, Pin.IN, Pin.PULL_UP)
+button_b = Pin(6, Pin.IN, Pin.PULL_UP)
+
+# Configuração OLED
+i2c = SoftI2C(scl=Pin(15), sda=Pin(14))
+oled = SSD1306_I2C(128, 64, i2c)
+
+c=0
+lista = [0,1,2,3,4,5,6,7,8,9]
+
+# Número de LEDs na sua matriz 5x5
+NUM_LEDS = 25
+
+# Inicializar a matriz de NeoPixels no GPIO7
+np = neopixel.NeoPixel(Pin(7), NUM_LEDS)
+
+# Definindo a matriz de LEDs
+LED_MATRIX = [
+    [24, 23, 22, 21, 20],
+    [15, 16, 17, 18, 19],
+    [14, 13, 12, 11, 10],
+    [5, 6, 7, 8, 9],
+    [4, 3, 2, 1, 0]
+]
+
+alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2],[23,22,21,16,13,6,3,1,2],[23,22,16,13,6,3,18,11,8,2],[23,22,21,16,13,6,3,1,12,2]]
+
+rosto_feliz = [6,8,15,23,22,21,19]
+rosto_triste = [6,8,24,16,17,18,20]
+
+# =====================================  INTERFACE DE APRESENTAÇÃO ==================================
+
+for i in range(NUM_LEDS):
+    np[i] = (0, 0, 0)
+
+for i in range(NUM_LEDS):
+    np[i] = (20, 20, 20)
+    np.write()
+    time.sleep(0.1)
+
+oled.fill(0)  # Limpar display
+oled.text("OLA, ALUNO!", 0, 0)
+oled.text("BEM VINDO!", 0, 10)
+oled.show()
+
+# Conecte o alto-falante ou buzzer passivo ao pino GP4
+alto_falante = PWM(Pin(21))
+
+# Conecte o LED RGB aos pinos GP13, GP12 e GP14
+led_red = PWM(Pin(13))
+led_green = PWM(Pin(12))
+led_blue = PWM(Pin(14))
+
+# Frequências das notas musicais (escala temperada)
+notas = {
+    'C4': 261,
+    'D4': 294,
+    'E4': 329,
+    'F4': 349,
+    'G4': 392,
+    'A4': 440,
+    'B4': 494,
+    'C5': 523,
+    'G3': 196,  # Sol uma oitava abaixo
+    'A#4': 466, # Lá sustenido
+    'PAUSA': 0
+}
+
+# Música "Super Mario Bros" - Parte Inicial
+musica_super_mario = [
+    ('E4', 1), ('E4', 1), ('E4', 1), ('C4', 1), ('E4', 1), ('G4', 2), ('G3', 4)
+]
+
+def tocar_musica(musica):
+    for nota, duracao in musica:
+        freq = notas[nota]
+        alto_falante.freq(freq)
+        alto_falante.duty_u16(32768 if freq > 0 else 0)
+        time.sleep_ms(170 * duracao)  # Controla a duração das notas
+        alto_falante.duty_u16(0)
+        time.sleep_ms(50)  # Pequena pausa entre as notas
+
+tocar_musica(musica_super_mario)
+
+mat = [24,15,14,5,4,6,12,8,0,9,10,19,20]
+
+for i in mat:
+    np[i] = (0,20,0)
+    np.write()
+    time.sleep(0.1)
+    
+for i in range(NUM_LEDS):
+    np[i] = (0, 0, 0)
+
+for i in rosto_feliz:
+    np[i] = (0,20,0)
+    np.write()
+
+time.sleep(0.5)
+
+np[6] = (0,0,0)
+np.write()
+time.sleep(0.2)
+np[6] = (0,20,0)
+np.write()
+
+time.sleep(3)
+
+# Configuração OLED
+i2c = SoftI2C(scl=Pin(15), sda=Pin(14))
+oled = SSD1306_I2C(128, 64, i2c)
+
+# ==============================  CLASSE PARA PERGUNTAS ==============================================
 
 class Question(): 
     
@@ -70,48 +189,10 @@ class Question():
         
         print("Espaço da Pergunta 10")            
 
-
-# Minhas variáveis
-
 pergunta = Question()
 
-# Inicializar ADC para os pinos VRx (GPIO26) e VRy (GPIO27)
-adc_vrx = ADC(Pin(26))
-adc_vry = ADC(Pin(27))
-
-# Configuração dos botões
-button_a = Pin(5, Pin.IN, Pin.PULL_UP)
-button_b = Pin(6, Pin.IN, Pin.PULL_UP)
-
-# Configuração OLED
-i2c = SoftI2C(scl=Pin(15), sda=Pin(14))
-oled = SSD1306_I2C(128, 64, i2c)
-
-c=0
-lista = [0,1,2,3,4,5,6,7,8,9]
-
-# Número de LEDs na sua matriz 5x5
-NUM_LEDS = 25
-
-# Inicializar a matriz de NeoPixels no GPIO7
-np = neopixel.NeoPixel(Pin(7), NUM_LEDS)
-
-# Definindo a matriz de LEDs
-LED_MATRIX = [
-    [24, 23, 22, 21, 20],
-    [15, 16, 17, 18, 19],
-    [14, 13, 12, 11, 10],
-    [5, 6, 7, 8, 9],
-    [4, 3, 2, 1, 0]
-]
-
-alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2],[23,22,21,16,13,6,3,1,2],[23,22,16,13,6,3,18,11,8,2],[23,22,21,16,13,6,3,1,12,2]]
-
-rosto_feliz = [6,8,15,23,22,21,19]
-rosto_triste = [6,8,24,16,17,18,20]
-
-
-def opcoes():
+# ===============================   ESCOLHA DAS ALTERNATIVAS =============================
+def opcoes(alternativa_correta):
     b=0
     escolha = True
     while escolha:
@@ -139,7 +220,7 @@ def opcoes():
         if button_a.value() == 0:
             for i in range(NUM_LEDS):
                 np[i] = (0, 0, 0)
-            if b==3:
+            if b==alternativa_correta:
                 for i in rosto_feliz:
                     np[i]=(0,20,0)
                     np.write()
@@ -154,6 +235,8 @@ def opcoes():
             escolha = False
     # Esperar um pouco antes da próxima leitura
         time.sleep(0.1)
+
+# =================================== INTERFACE PRINCIPAL ==========================================
 
 while True:
     # Ler valores analógicos de VRx e VRy
@@ -171,6 +254,8 @@ while True:
     # Teste OLED
     oled.fill(0)  # Limpar display
     oled.text("PERGUNTA", 0, 0)
+    oled.text("Para escolher", 0, 20)
+    oled.text("Pressione (A)", 0, 30)
 
     for i in lista:
         if i == c:
@@ -180,44 +265,43 @@ while True:
                 if c==0:
                     pergunta.pergunta01()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(0)
                 elif c==1:
                     pergunta.pergunta02()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(1)
                 elif c==2:
                     pergunta.pergunta03()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(2)
                 elif c==3:
                     pergunta.pergunta04()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(3)
                 elif c==4:
                     pergunta.pergunta05()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(4)
                 elif c==5:
                     pergunta.pergunta06()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(0)
                 elif c==6:
                     pergunta.pergunta07()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(1)
                 elif c==7:
                     pergunta.pergunta08()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(2)
                 elif c==8:
                     pergunta.pergunta09()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(3)
                 elif c==9:
                     pergunta.pergunta10()
                     time.sleep(10)
-                    opcoes()
+                    opcoes(4)
                         
     # Esperar um pouco antes da próxima leitura
     time.sleep(0.1)
-
