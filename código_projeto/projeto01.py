@@ -4,6 +4,7 @@ import time
 from ssd1306 import SSD1306_I2C
 import utime
 
+volume = 65 # Era 32768
 # ==============================  DECLARAÇÃO DE VARIÁVEIS =======================================
 
 # Inicializar ADC para os pinos VRx (GPIO26) e VRy (GPIO27)
@@ -88,7 +89,7 @@ def tocar_musica(musica):
     for nota, duracao in musica:
         freq = notas[nota]
         alto_falante.freq(freq)
-        alto_falante.duty_u16(32768 if freq > 0 else 0)
+        alto_falante.duty_u16(volume if freq > 0 else 0)
         time.sleep_ms(170 * duracao)  # Controla a duração das notas
         alto_falante.duty_u16(0)
         time.sleep_ms(50)  # Pequena pausa entre as notas
