@@ -225,11 +225,19 @@ def opcoes(alternativa_correta):
                     np[i]=(0,2,0)
                     np.write()
                 time.sleep(2)
+                for i in range(NUM_LEDS):
+                    np[i] = (0, 0, 0)
+                    np.write()
+                escolha = False
             else:
                 for i in rosto_triste:
                     np[i]=(2,0,0)
                     np.write()
                 time.sleep(2)
+                for i in range(NUM_LEDS):
+                    np[i] = (0, 0, 0)
+                    np.write()
+                escolha = False
                     
         if button_b.value() == 0:
             escolha = False
@@ -237,6 +245,8 @@ def opcoes(alternativa_correta):
         time.sleep(0.1)
 
 # =================================== INTERFACE PRINCIPAL ==========================================
+
+escolhidas = []
 
 while True:
     # Ler valores analógicos de VRx e VRy
@@ -302,6 +312,6 @@ while True:
                     pergunta.pergunta10()
                     time.sleep(10)
                     opcoes(4)
-                        
+                escolhidas.append(c)       
     # Esperar um pouco antes da próxima leitura
     time.sleep(0.1)
