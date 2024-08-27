@@ -1,69 +1,37 @@
 from machine import Pin, ADC, PWM, SoftI2C
-import neopixel
-import time
 from ssd1306 import SSD1306_I2C
-import utime
+import neopixel, time, utime
 
-volume = 65 # Era 32768
-# ==============================  DECLARAÇÃO DE VARIÁVEIS =======================================
+# ==========================  INICIALIZACAO DE PERIFERICOS =========================
+adc_vrx = ADC(Pin(26)) # inicializa pino VRx (GPIO26)
+adc_vry = ADC(Pin(27)) # inicializa pino VRx (GPIO27)
+button_a = Pin(5, Pin.IN, Pin.PULL_UP) # configura botao A
+button_b = Pin(6, Pin.IN, Pin.PULL_UP) # configura botao B
+led_red = PWM(Pin(13)) # inicializa LED RGB no pino GP13
+led_green = PWM(Pin(12)) # inicializa LED RGB no pino GP12
+#led_blue = PWM(Pin(14)) # inicializa no pino GP14, nao pode, sera usado por oled
+i2c = SoftI2C(scl=Pin(15), sda=Pin(14)) # configura Display oled no GP14
+oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
+NUM_LEDS = 25 # Número de LEDs na sua matriz 5x5
+np = neopixel.NeoPixel(Pin(7), NUM_LEDS) # Inicializa matriz LEDs no GPIO7
+alto_falante = PWM(Pin(21)) # inicializa buzzer passivo no pino GP4
+# ==========================  INICIALIZACAO DE PERIFERICOS =========================
 
-# Inicializar ADC para os pinos VRx (GPIO26) e VRy (GPIO27)
-adc_vrx = ADC(Pin(26))
-adc_vry = ADC(Pin(27))
-
-# Configuração dos botões
-button_a = Pin(5, Pin.IN, Pin.PULL_UP)
-button_b = Pin(6, Pin.IN, Pin.PULL_UP)
-
-# Configuração OLED
-i2c = SoftI2C(scl=Pin(15), sda=Pin(14))
-oled = SSD1306_I2C(128, 64, i2c)
-
+# ============================  DEFINIÇÃO DE CONSTANTES ============================
 c=0
 lista = [0,1,2,3,4,5,6,7,8,9]
 
-# Número de LEDs na sua matriz 5x5
-NUM_LEDS = 25
-
-# Inicializar a matriz de NeoPixels no GPIO7
-np = neopixel.NeoPixel(Pin(7), NUM_LEDS)
-
-# Definindo a matriz de LEDs
-LED_MATRIX = [
-    [24, 23, 22, 21, 20],
-    [15, 16, 17, 18, 19],
-    [14, 13, 12, 11, 10],
-    [5, 6, 7, 8, 9],
-    [4, 3, 2, 1, 0]
-]
+# Referencia para matriz de LEDs, Atenção, é um Zig-Zag!!
+#  4, 3, 2, 1, 0
+#  5, 6, 7, 8, 9
+# 14,13,12,11,10
+# 15,16,17,18,19
+# 24,23,22,21,20
 
 alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2],[23,22,21,16,13,6,3,1,2],[23,22,16,13,6,3,18,11,8,2],[23,22,21,16,13,6,3,1,12,2]]
 
 rosto_feliz = [6,8,15,23,22,21,19]
 rosto_triste = [6,8,24,16,17,18,20]
-
-# =====================================  INTERFACE DE APRESENTAÇÃO ==================================
-
-for i in range(NUM_LEDS):
-    np[i] = (0, 0, 0)
-
-for i in range(NUM_LEDS):
-    np[i] = (2, 2, 2)
-    np.write()
-    time.sleep(0.1)
-
-oled.fill(0)  # Limpar display
-oled.text("OLA, ALUNO!", 0, 0)
-oled.text("BEM VINDO!", 0, 10)
-oled.show()
-
-# Conecte o alto-falante ou buzzer passivo ao pino GP4
-alto_falante = PWM(Pin(21))
-
-# Conecte o LED RGB aos pinos GP13, GP12 e GP14
-led_red = PWM(Pin(13))
-led_green = PWM(Pin(12))
-led_blue = PWM(Pin(14))
 
 # Frequências das notas musicais (escala temperada)
 notas = {
@@ -82,54 +50,77 @@ notas = {
 
 # Música "Super Mario Bros" - Parte Inicial
 musica_super_mario = [
-    ('E4', 1), ('E4', 1), ('E4', 1), ('C4', 1), ('E4', 1), ('G4', 2), ('G3', 4)
-]
+    ('E4',5),('E4',8),('E4',10),('C4',4),('E4',8),('G4',20),('G3',16)]
+tempo_mario = 32
+volume = 65 # Era 32768
+# ===========================  DEFINIÇÃO DE CONSTANTES =========================
 
+
+# ==========================  FUNCOES PARA APRESENTACAO =========================
 def tocar_musica(musica):
     for nota, duracao in musica:
         freq = notas[nota]
         alto_falante.freq(freq)
-        alto_falante.duty_u16(volume if freq > 0 else 0)
-        time.sleep_ms(170 * duracao)  # Controla a duração das notas
+        alto_falante.duty_u16(volume if freq > 0 else 0) # era 32768
+        time.sleep_ms(tempo_mario*duracao)  # Controla a duração das notas
         alto_falante.duty_u16(0)
         time.sleep_ms(50)  # Pequena pausa entre as notas
 
+# Funcoes da apresentacao
+def limpa_matriz_leds():
+    for i in range(NUM_LEDS):
+        np[i] = (0, 0, 0)
+
+def preenche_matriz_led_zig_zag():
+    for i in range(NUM_LEDS):
+        np[i] = (2, 2, 2)
+        np.write()
+        time.sleep(0.045)
+
+def ola_aluno_bem_vindo():
+    oled.fill(0)  # Limpar display
+    oled.text("OLA, ALUNO!", 0, 0)
+    oled.text("BEM VINDO!", 0, 10)
+    oled.show()
+
+def letra_m():
+    mat = [24,15,14,5,4,6,12,8,0,9,10,19,20]
+    for i in mat:
+        np[i] = (0,2,0)
+        np.write()
+        time.sleep(0.1)
+
+def rosto_feliz_piscando():
+    for i in rosto_feliz:
+        np[i] = (0,2,0)
+        np.write()
+    time.sleep(0.5)
+    # Piscada
+    np[6] = (0,0,0)
+    np.write()
+    time.sleep(0.2)
+    np[6] = (0,2,0)
+    np.write()
+# ==========================  FUNCOES PARA APRESENTACAO =========================
+
+
+# ===========================  SEQUENCIA DE APRESENTAÇÃO ========================
+limpa_matriz_leds()
+preenche_matriz_led_zig_zag()
+ola_aluno_bem_vindo()
 tocar_musica(musica_super_mario)
-
-mat = [24,15,14,5,4,6,12,8,0,9,10,19,20]
-
-for i in mat:
-    np[i] = (0,2,0)
-    np.write()
-    time.sleep(0.1)
-    
-for i in range(NUM_LEDS):
-    np[i] = (0, 0, 0)
-
-for i in rosto_feliz:
-    np[i] = (0,2,0)
-    np.write()
-
-time.sleep(0.5)
-
-np[6] = (0,0,0)
-np.write()
-time.sleep(0.2)
-np[6] = (0,2,0)
-np.write()
-
+letra_m()
+limpa_matriz_leds()
+rosto_feliz_piscando()
 time.sleep(3)
+# ===========================  SEQUENCIA DE APRESENTAÇÃO ========================
 
-# Configuração OLED
-i2c = SoftI2C(scl=Pin(15), sda=Pin(14))
-oled = SSD1306_I2C(128, 64, i2c)
 
-# ==============================  CLASSE PARA PERGUNTAS ==============================================
-
+# =============================  CLASSE PARA PERGUNTAS ==========================
 class Question(): 
     
     def pergunta01(self):
-        # Suponhando que a matriz de LED seja um gráfico com coordenadas (x,y), qual é o tipo de função apresentada? 
+        # Suponha que a matriz de LED seja um gráfico com coordenadas (x,y), qual é o tipo de função apresentada? 
         for i in range(NUM_LEDS):
             np[i] = (0, 0, 0)
 
@@ -168,31 +159,13 @@ class Question():
         
     def pergunta05(self):
         
-        print("Espaço da Pergunta 05")
-        
-    def pergunta06(self):
-        
-        print("Espaço da Pergunta 06")
-        
-    def pergunta07(self):
-        
-        print("Espaço da Pergunta 07")
-        
-    def pergunta08(self):
-        
-        print("Espaço da Pergunta 08")
-        
-    def pergunta09(self):
-        
-        print("Espaço da Pergunta 09")
-               
-    def pergunta10(self):
-        
-        print("Espaço da Pergunta 10")            
+        print("Espaço da Pergunta 05")            
 
 pergunta = Question()
+# =============================  CLASSE PARA PERGUNTAS ==========================
 
-# ===============================   ESCOLHA DAS ALTERNATIVAS =============================
+
+# ===========================   ESCOLHA DAS ALTERNATIVAS =========================
 def opcoes(alternativa_correta):
     b=0
     escolha = True
@@ -244,11 +217,11 @@ def opcoes(alternativa_correta):
             escolha = False
     # Esperar um pouco antes da próxima leitura
         time.sleep(0.1)
+# ===========================   ESCOLHA DAS ALTERNATIVAS =========================
 
-# =================================== INTERFACE PRINCIPAL ==========================================
 
+# ============================== INTERFACE PRINCIPAL==============================
 escolhidas = []
-
 while True:
     # Ler valores analógicos de VRx e VRy
     vrx_value = adc_vrx.read_u16()
@@ -316,3 +289,6 @@ while True:
                 escolhidas.append(c)       
     # Esperar um pouco antes da próxima leitura
     time.sleep(0.1)
+# ============================== INTERFACE PRINCIPAL==============================
+
+
