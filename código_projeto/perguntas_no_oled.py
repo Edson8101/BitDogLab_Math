@@ -153,7 +153,7 @@ class Question():
             oled.text("Tempo: {}".format(cont), 0, 50)
             oled.show()
             cont -= 1
-            time.sleep(1)  # Alterado para 1000 milissegundos (1 segundo) para a função delay, se estiver em milissegundos.
+            time.sleep(1) 
         oled.fill(0)  # Limpar display ao final do tempo
         oled.show()
         
@@ -201,7 +201,7 @@ class Question():
         self.tempo()
                 
     def pergunta03(self):
-        
+        # Qual é a área e o perimetro do quadrado mostrado na matriz de leds?
         self.limpa_matriz()
     
         quadrado = [0,1,2,3,6,13,16,17,18,19,10,9,8,7,12,11]
@@ -219,7 +219,7 @@ class Question():
         self.tempo()
  
     def pergunta04(self):
-        
+        #Qual é a distancia euclidiana ente os dois pontos mostrados na matriz de LEDs?
         self.limpa_matriz()
         
         np[0] = (2,2,2)
@@ -235,7 +235,7 @@ class Question():
         self.tempo() 
         
     def pergunta05(self):
-        
+        # Considerando que cada led verde é x e que cada led azul é y, qual é a expressão algébrica formada pela matriz de leds?
         self.limpa_matriz()
         
         azul = [0,1,2,4,5,8,10,15,22,23]
