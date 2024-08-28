@@ -59,7 +59,7 @@ notas = {
 musica_super_mario = [
     ('E4',5),('E4',8),('E4',10),('C4',4),('E4',8),('G4',20),('G3',16)]
 tempo_mario = 32
-volume = 65 # Era 32768
+volume = 1000 # Era 32768
 # ===========================  DEFINIÇÃO DE CONSTANTES =========================
 
 
@@ -120,6 +120,11 @@ letra_m()
 limpa_matriz_leds()
 rosto_feliz_piscando()
 time.sleep(3)
+
+#Eh necessário fazer essa configuração novamente porque o pino do oled coincide com o pino do buzzer
+i2c = SoftI2C(scl=Pin(15), sda=Pin(14)) # configura Display oled no GP14
+oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
+
 # ===========================  SEQUENCIA DE APRESENTAÇÃO ========================
 
 
@@ -174,6 +179,8 @@ pergunta = Question()
 
 # ===========================   ESCOLHA DAS ALTERNATIVAS =========================
 def contagem(eixo_y):
+    global cont_pergunta
+    
     if eixo_y < 20000:
         cont_pergunta+=1
         if cont_pergunta>4:
@@ -182,16 +189,7 @@ def contagem(eixo_y):
         cont_pergunta-=1
         if cont_pergunta<0:
             cont_pergunta=4
-    return cont_pergunta
-    
-def rosto_resposta():
-    for i in rosto_triste:
-            np[i]=(2,0,0)
-            np.write()
-        time.sleep(2)
-    for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
-            np.write()    
+    return cont_pergunta  
 
 def opcoes(alternativa_correta):
     escolha = True
@@ -282,11 +280,8 @@ while True:
     vry_value = adc_vry.read_u16()
     
     num_pergunta = contagem(vry_value)
-
     seleciona_pergunta(num_pergunta)
     
     # Esperar um pouco antes da próxima leitura
     time.sleep(0.1)
 # ============================== INTERFACE PRINCIPAL==============================
-
-
