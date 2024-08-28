@@ -18,8 +18,8 @@ alto_falante = PWM(Pin(21)) # inicializa buzzer passivo no pino GP4
 # ==========================  INICIALIZACAO DE PERIFERICOS =========================
 
 # ============================  DEFINIÇÃO DE CONSTANTES ============================
-c=0
-lista = [0,1,2,3,4,5,6,7,8,9]
+cont_pergunta=0
+lista_pergunta = [0,1,2,3,4]
 
 # Referencia para matriz de LEDs, Atenção, é um Zig-Zag!!
 #  4, 3, 2, 1, 0
@@ -28,7 +28,14 @@ lista = [0,1,2,3,4,5,6,7,8,9]
 # 15,16,17,18,19
 # 24,23,22,21,20
 
-alternativa = [[23,2,21,16,13,6,3,18,11,8,1,12],[23,22,21,16,13,6,3,18,8,1,12,2],[23,22,21,16,13,6,3,1,2],[23,22,16,13,6,3,18,11,8,2],[23,22,21,16,13,6,3,1,12,2]]
+# LEDS das Alternativas
+A = [23,2,21,16,13,6,3,18,11,8,1,12]
+B = [23,22,21,16,13,6,3,18,8,1,12,2]
+C = [23,22,21,16,13,6,3,1,2]
+D = [23,22,16,13,6,3,18,11,8,2]
+E = [23,22,21,16,13,6,3,1,12,2]
+
+alternativa = [A,B,C,D,E]
 
 rosto_feliz = [6,8,15,23,22,21,19]
 rosto_triste = [6,8,24,16,17,18,20]
@@ -166,22 +173,33 @@ pergunta = Question()
 
 
 # ===========================   ESCOLHA DAS ALTERNATIVAS =========================
+def contagem(eixo_y):
+    if eixo_y < 20000:
+        cont_pergunta+=1
+        if cont_pergunta>4:
+            cont_pergunta=0
+    elif eixo_y > 40000:
+        cont_pergunta-=1
+        if cont_pergunta<0:
+            cont_pergunta=4
+    return cont_pergunta
+    
+def rosto_resposta():
+    for i in rosto_triste:
+            np[i]=(2,0,0)
+            np.write()
+        time.sleep(2)
+    for i in range(NUM_LEDS):
+            np[i] = (0, 0, 0)
+            np.write()    
+
 def opcoes(alternativa_correta):
-    b=0
     escolha = True
     while escolha:
     # Ler valores analógicos de VRx e VRy
         vrx_value = adc_vrx.read_u16()
         vry_value = adc_vry.read_u16()
-
-        if vry_value < 20000:
-            b+=1
-            if b>4:
-                b=0
-        elif vry_value > 40000:
-            b-=1
-            if b<0:
-                b=4
+        b = contagem(vry_value)
 
     # Desligar todos os LEDs
         for i in range(NUM_LEDS):
@@ -221,72 +239,52 @@ def opcoes(alternativa_correta):
 
 
 # ============================== INTERFACE PRINCIPAL==============================
-escolhidas = []
+def mostrando_pergunta(question):
+    if question==0:
+        pergunta.pergunta01()
+        time.sleep(10)
+        opcoes(0)
+    elif question==1:
+        pergunta.pergunta02()
+        time.sleep(10)
+        opcoes(1)
+    elif question==2:
+        pergunta.pergunta03()
+        time.sleep(10)
+        opcoes(2)
+    elif question==3:
+        pergunta.pergunta04()
+        time.sleep(10)
+        opcoes(3)
+    elif question==4:
+        pergunta.pergunta05()
+        time.sleep(10)
+        opcoes(4)
+def mensagem_menu():
+        # Teste OLED
+    oled.fill(0)  # Limpar display
+    oled.text("PERGUNTA", 0, 0)
+    oled.text("(A) Selecionar", 0, 20)
+    oled.text("(B) Voltar", 0, 30)
+    
+def seleciona_pergunta(ordem_pergunta):
+    mensagem_menu()
+    for i in lista_pergunta:
+        if i == ordem_pergunta:
+            oled.text("Questao {}".format(ordem_pergunta+1), 0, 10)
+            oled.show()
+            if button_a.value() == 0:
+                mostrando_pergunta(ordem_pergunta)
+
 while True:
     # Ler valores analógicos de VRx e VRy
     vrx_value = adc_vrx.read_u16()
     vry_value = adc_vry.read_u16()
     
-    if vry_value < 20000:
-        c+=1
-        if c>9:
-            c=0
-    elif vry_value > 40000:
-        c-=1
-        if c<0:
-            c=9
-    # Teste OLED
-    oled.fill(0)  # Limpar display
-    oled.text("PERGUNTA", 0, 0)
-    oled.text("(A) Selecionar", 0, 20)
-    oled.text("(B) Voltar", 0, 30)
+    num_pergunta = contagem(vry_value)
 
-    for i in lista:
-        if i == c:
-            oled.text("Questao {}".format(c+1), 0, 10)
-            oled.show()
-            if button_a.value() == 0:
-                if c==0:
-                    pergunta.pergunta01()
-                    time.sleep(10)
-                    opcoes(0)
-                elif c==1:
-                    pergunta.pergunta02()
-                    time.sleep(10)
-                    opcoes(1)
-                elif c==2:
-                    pergunta.pergunta03()
-                    time.sleep(10)
-                    opcoes(2)
-                elif c==3:
-                    pergunta.pergunta04()
-                    time.sleep(10)
-                    opcoes(3)
-                elif c==4:
-                    pergunta.pergunta05()
-                    time.sleep(10)
-                    opcoes(4)
-                elif c==5:
-                    pergunta.pergunta06()
-                    time.sleep(10)
-                    opcoes(0)
-                elif c==6:
-                    pergunta.pergunta07()
-                    time.sleep(10)
-                    opcoes(1)
-                elif c==7:
-                    pergunta.pergunta08()
-                    time.sleep(10)
-                    opcoes(2)
-                elif c==8:
-                    pergunta.pergunta09()
-                    time.sleep(10)
-                    opcoes(3)
-                elif c==9:
-                    pergunta.pergunta10()
-                    time.sleep(10)
-                    opcoes(4)
-                escolhidas.append(c)       
+    seleciona_pergunta(num_pergunta)
+    
     # Esperar um pouco antes da próxima leitura
     time.sleep(0.1)
 # ============================== INTERFACE PRINCIPAL==============================
