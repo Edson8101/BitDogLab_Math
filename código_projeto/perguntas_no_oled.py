@@ -37,6 +37,12 @@ E = [23,22,21,16,13,6,3,1,12,2]
 
 alternativa = [A,B,C,D,E]
 
+resposta = {'A': 0,
+            'B': 1,
+            'C': 2,
+            'D': 3,
+            'E': 4}
+
 rosto_feliz = [6,8,15,23,22,21,19]
 rosto_triste = [6,8,24,16,17,18,20]
 
@@ -58,7 +64,7 @@ notas = {
 # Música "Super Mario Bros" - Parte Inicial
 musica_super_mario = [
     ('E4',5),('E4',8),('E4',10),('C4',4),('E4',8),('G4',20),('G3',16)]
-tempo_mario = 32
+tempo_mario = 24
 volume = 1000 # Era 32768
 # ===========================  DEFINIÇÃO DE CONSTANTES =========================
 
@@ -137,7 +143,7 @@ class Question():
             np.write()
 
     def apagar_linha(self,linha):
-        oled.fill_rect(0, linha, 128, 10, 0)  # Preenche um retângulo de 1 pixel de altura na linha especificada
+        oled.fill_rect(0, linha, 128, 10, 0)  # Preenche um retângulo de 10 pixels de altura na linha especificada
         oled.show()
         
     def tempo(self):
@@ -169,8 +175,7 @@ class Question():
     
     def pergunta02(self):
         # Qual é a probabilidade de escolher um LED com a cor vermelha entre todas as cores apresentadas na matriz de LED?
-        for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
+        self.limpa_matriz()
 
         red = [0,2,5,7,8,12]
         green = [1,3,4,6,9,15,18,19,20,21]
@@ -184,19 +189,73 @@ class Question():
             np.write()
         for i in blue:
             np[i] = (0, 0, 2)
-            np.write()   
+            np.write()
+            
+        oled.fill(0)
+        oled.text("Qual e a proba-",0,0)
+        oled.text("bilidade de es-",0,10)
+        oled.text("colher um LED",0,20)
+        oled.text("vermelho na ma-",0,30)
+        oled.text("triz de LEDs?",0,40)
+        oled.show()
+        self.tempo()
                 
     def pergunta03(self):
         
-        print("Espaço da Pergunta 03")
+        self.limpa_matriz()
+    
+        quadrado = [0,1,2,3,6,13,16,17,18,19,10,9,8,7,12,11]
+        
+        for i in quadrado:
+            np[i] = (2, 2, 2)
+            np.write()
+        
+        oled.fill(0)
+        oled.text("Qual e a area",0,0)
+        oled.text("e o perimetro do quadrado?",0,10)
+        oled.text("do quadrado na",0,20)
+        oled.text("matriz de LEDs?",0,30)
+        oled.show()
+        self.tempo()
  
     def pergunta04(self):
         
-        print("Espaço da Pergunta 04")
+        self.limpa_matriz()
+        
+        np[0] = (2,2,2)
+        np[24] = (2,2,2)
+        np.write()
+        
+        oled.fill(0)
+        oled.text("Qual e a distan-",0,0)
+        oled.text("cia entre os ",0,10)
+        oled.text("dois pontos na ",0,20)
+        oled.text("matriz de LEDs?",0,30)
+        oled.show()
+        self.tempo() 
         
     def pergunta05(self):
         
-        print("Espaço da Pergunta 05")            
+        self.limpa_matriz()
+        
+        azul = [0,1,2,4,5,8,10,15,22,23]
+        verde = [3,6,7,9,11,12,13,14,16,17,18,19,20,21,24]
+        
+        for i in azul:
+            np[i] = (0, 0, 2)
+        for i in verde:
+            np[i] = (0, 2, 0)
+            
+        np.write()
+        
+        oled.fill(0)
+        oled.text("Se cada led ver-",0,0)
+        oled.text("de eh x e cada",0,10)
+        oled.text("led azul eh y. A",0,20)
+        oled.text("expressao alge-",0,30)
+        oled.text("brica formada e?",0,40)
+        oled.show()
+        self.tempo()          
 
 pergunta = Question()
 # =============================  CLASSE PARA PERGUNTAS ==========================
@@ -230,8 +289,8 @@ def rosto_triste_desenho():
     time.sleep(2)    
     limpa_matriz_leds()
 
-def alternativa_certa(right_question):
-    for i in alternativa[right_question]:
+def desenha_alternativa(question):
+    for i in alternativa[question]:
         np[i] = (0, 2, 0)
         np.write()
     
@@ -245,7 +304,7 @@ def opcoes(alternativa_correta):
 
     # Desligar todos os LEDs
         limpa_matriz_leds()
-        alternativa_certa(b)
+        desenha_alternativa(b)
             
         if button_a.value() == 0:
             limpa_matriz_leds()
@@ -264,26 +323,32 @@ def opcoes(alternativa_correta):
 
 
 # ============================== INTERFACE PRINCIPAL==============================
+
+respostas_corretas = ['A','E','C','B','D'] # Aqui escolhemos a sequência de respostas corretas da questão de 1 a 5
+
+correct = [resposta[respostas_corretas[0]],
+           resposta[respostas_corretas[1]],
+           resposta[respostas_corretas[2]],
+           resposta[respostas_corretas[3]],
+           resposta[respostas_corretas[4]]]
+
 def mostrando_pergunta(question):
     if question==0:
         pergunta.pergunta01()
-        opcoes(0)
+        opcoes(correct[0])  # o parametro em opções corresponde a alternativa correta
     elif question==1:
         pergunta.pergunta02()
-        time.sleep(10)
-        opcoes(1)
+        opcoes(correct[1]) # o parametro em opções corresponde a alternativa correta
     elif question==2:
         pergunta.pergunta03()
-        time.sleep(10)
-        opcoes(2)
+        opcoes(correct[2]) # o parametro em opções corresponde a alternativa correta
     elif question==3:
         pergunta.pergunta04()
-        time.sleep(10)
-        opcoes(3)
+        opcoes(correct[3]) # o parametro em opções corresponde a alternativa correta
     elif question==4:
         pergunta.pergunta05()
-        time.sleep(10)
-        opcoes(4)
+        opcoes(correct[4]) # o parametro em opções corresponde a alternativa correta
+        
 def mensagem_menu():
         # Teste OLED
     oled.fill(0)  # Limpar display
