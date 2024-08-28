@@ -191,6 +191,25 @@ def contagem(eixo_y):
             cont_pergunta=4
     return cont_pergunta  
 
+def rosto_feliz_desenho():
+    for i in rosto_feliz:
+        np[i]=(0,2,0)
+        np.write()
+    time.sleep(2)
+    limpa_matriz_leds()
+        
+def rosto_triste_desenho():
+    for i in rosto_triste:
+        np[i]=(2,0,0)
+        np.write()
+    time.sleep(2)    
+    limpa_matriz_leds()
+
+def alternativa_correta(right_question):
+    for i in alternativa[right_question]:
+        np[i] = (0, 2, 0)
+        np.write()
+    
 def opcoes(alternativa_correta):
     escolha = True
     while escolha:
@@ -200,33 +219,16 @@ def opcoes(alternativa_correta):
         b = contagem(vry_value)
 
     # Desligar todos os LEDs
-        for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
- 
-        for i in alternativa[b]:
-            np[i] = (0, 2, 0)
-            np.write()
+        limpa_matriz_leds()
+        alternativa_correta(b)
             
         if button_a.value() == 0:
-            for i in range(NUM_LEDS):
-                np[i] = (0, 0, 0)
+            limpa_matriz_leds()
             if b==alternativa_correta:
-                for i in rosto_feliz:
-                    np[i]=(0,2,0)
-                    np.write()
-                time.sleep(2)
-                for i in range(NUM_LEDS):
-                    np[i] = (0, 0, 0)
-                    np.write()
+                rosto_feliz_desenho()
                 escolha = False
             else:
-                for i in rosto_triste:
-                    np[i]=(2,0,0)
-                    np.write()
-                time.sleep(2)
-                for i in range(NUM_LEDS):
-                    np[i] = (0, 0, 0)
-                    np.write()
+                rosto_triste_desenho()
                 escolha = False
                     
         if button_b.value() == 0:
