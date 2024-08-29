@@ -137,6 +137,7 @@ oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
 
 # =============================  CLASSE PARA PERGUNTAS ==========================
 class Question():
+        
     def limpa_matriz(self):
         for i in range(NUM_LEDS):
             np[i] = (0, 0, 0)
@@ -255,9 +256,143 @@ class Question():
         oled.text("expressao alge-",0,30)
         oled.text("brica formada e?",0,40)
         oled.show()
-        self.tempo()          
+        self.tempo()
+
+    def opcoes_oled(self, questao_selecionada, alternativa):
+
+        if questao_selecionada ==0:
+            if alternativa == 0:
+                oled.fill(0)
+                oled.text("Alternativa (A)",0,0)
+                oled.text("Linear",0,10)
+                oled.show()    
+            elif alternativa == 1:
+                oled.fill(0)
+                oled.text("Alternativa (B)",0,0)
+                oled.text("Exponencial",0,10)
+                oled.show()   
+            elif alternativa == 2:
+                oled.fill(0)
+                oled.text("Alternativa (C)",0,0)
+                oled.text("Quadratica",0,10)
+                oled.show()   
+            elif alternativa == 3:
+                oled.fill(0)
+                oled.text("Alternativa (D)",0,0)
+                oled.text("Logaritmica",0,10)
+                oled.show()   
+            elif alternativa == 4:
+                oled.fill(0)
+                oled.text("Alternativa (E)",0,0)
+                oled.text("Modular",0,10)
+                oled.show()   
+        elif questao_selecionada ==1:
+            if alternativa == 0:
+                oled.fill(0)
+                oled.text("Alternativa (A)",0,0)
+                oled.text("1/5",0,10)
+                oled.show()    
+            elif alternativa == 1:
+                oled.fill(0)
+                oled.text("Alternativa (B)",0,0)
+                oled.text("4/25",0,10)
+                oled.show()   
+            elif alternativa == 2:
+                oled.fill(0)
+                oled.text("Alternativa (C)",0,0)
+                oled.text("6/25",0,10)
+                oled.show()   
+            elif alternativa == 3:
+                oled.fill(0)
+                oled.text("Alternativa (D)",0,0)
+                oled.text("19/25",0,10)
+                oled.show()   
+            elif alternativa == 4:
+                oled.fill(0)
+                oled.text("Alternativa (E)",0,0)
+                oled.text("1/25",0,10)
+                oled.show()       
+        elif questao_selecionada ==2:
+            if alternativa == 0:
+                oled.fill(0)
+                oled.text("Alternativa (A)",0,0)
+                oled.text("16 e 8",0,10)
+                oled.show()    
+            elif alternativa == 1:
+                oled.fill(0)
+                oled.text("Alternativa (B)",0,0)
+                oled.text("16 e 16",0,10)
+                oled.show()   
+            elif alternativa == 2:
+                oled.fill(0)
+                oled.text("Alternativa (C)",0,0)
+                oled.text("20 e 16",0,10)
+                oled.show()   
+            elif alternativa == 3:
+                oled.fill(0)
+                oled.text("Alternativa (D)",0,0)
+                oled.text("4 e 16",0,10)
+                oled.show()   
+            elif alternativa == 4:
+                oled.fill(0)
+                oled.text("Alternativa (E)",0,0)
+                oled.text("8 e 8",0,10)
+                oled.show()         
+        elif questao_selecionada ==3:
+            if alternativa == 0:
+                oled.fill(0)
+                oled.text("Alternativa (A)",0,0)
+                oled.text("4",0,10)
+                oled.show()    
+            elif alternativa == 1:
+                oled.fill(0)
+                oled.text("Alternativa (B)",0,0)
+                oled.text("raiz(20)",0,10)
+                oled.show()   
+            elif alternativa == 2:
+                oled.fill(0)
+                oled.text("Alternativa (C)",0,0)
+                oled.text("8",0,10)
+                oled.show()   
+            elif alternativa == 3:
+                oled.fill(0)
+                oled.text("Alternativa (D)",0,0)
+                oled.text("16",0,10)
+                oled.show()   
+            elif alternativa == 4:
+                oled.fill(0)
+                oled.text("Alternativa (E)",0,0)
+                oled.text("raiz(32)",0,10)
+                oled.show()      
+        elif questao_selecionada ==4:
+            if alternativa == 0:
+                oled.fill(0)
+                oled.text("Alternativa (A)",0,0)
+                oled.text("12x + 6y",0,10)
+                oled.show()    
+            elif alternativa == 1:
+                oled.fill(0)
+                oled.text("Alternativa (B)",0,0)
+                oled.text("8x + 5y",0,10)
+                oled.show()   
+            elif alternativa == 2:
+                oled.fill(0)
+                oled.text("Alternativa (C)",0,0)
+                oled.text("2x + 10y",0,10)
+                oled.show()   
+            elif alternativa == 3:
+                oled.fill(0)
+                oled.text("Alternativa (D)",0,0)
+                oled.text("10y + 15x",0,10)
+                oled.show()   
+            elif alternativa == 4:
+                oled.fill(0)
+                oled.text("Alternativa (E)",0,0)
+                oled.text("14y + 6x",0,10)
+                oled.show()  
 
 pergunta = Question()
+resp = Question()
 # =============================  CLASSE PARA PERGUNTAS ==========================
 
 
@@ -279,6 +414,9 @@ def rosto_feliz_desenho():
     for i in rosto_feliz:
         np[i]=(0,2,0)
         np.write()
+    oled.fill(0)
+    oled.text("ACERTOOUUU",0,0)
+    oled.show()  
     time.sleep(2)
     limpa_matriz_leds()
         
@@ -286,15 +424,19 @@ def rosto_triste_desenho():
     for i in rosto_triste:
         np[i]=(2,0,0)
         np.write()
-    time.sleep(2)    
+        
+    oled.fill(0)
+    oled.text("ERROOUUUU",0,0)
+    oled.show()  
+    time.sleep(2)
     limpa_matriz_leds()
 
 def desenha_alternativa(question):
     for i in alternativa[question]:
         np[i] = (0, 2, 0)
         np.write()
-    
-def opcoes(alternativa_correta):
+  
+def opcoes(num_da_questao, alternativa_correta):
     escolha = True
     while escolha:
     # Ler valores analógicos de VRx e VRy
@@ -305,16 +447,15 @@ def opcoes(alternativa_correta):
     # Desligar todos os LEDs
         limpa_matriz_leds()
         desenha_alternativa(b)
+        resp.opcoes_oled(num_da_questao,b)
             
         if button_a.value() == 0:
             limpa_matriz_leds()
             if b==alternativa_correta:
                 rosto_feliz_desenho()
-                escolha = False
             else:
                 rosto_triste_desenho()
-                escolha = False
-                    
+            escolha = False        
         if button_b.value() == 0:
             escolha = False
     # Esperar um pouco antes da próxima leitura
@@ -324,7 +465,7 @@ def opcoes(alternativa_correta):
 
 # ============================== INTERFACE PRINCIPAL==============================
 
-respostas_corretas = ['A','E','C','B','D'] # Aqui escolhemos a sequência de respostas corretas da questão de 1 a 5
+respostas_corretas = ['A','C','B','E','D'] # Aqui escolhemos a sequência de respostas corretas da questão de 1 a 5
 
 correct = [resposta[respostas_corretas[0]],
            resposta[respostas_corretas[1]],
@@ -335,19 +476,19 @@ correct = [resposta[respostas_corretas[0]],
 def mostrando_pergunta(question):
     if question==0:
         pergunta.pergunta01()
-        opcoes(correct[0])  # o parametro em opções corresponde a alternativa correta
+        opcoes(question, correct[0])  # o parametro em opções corresponde a alternativa correta
     elif question==1:
         pergunta.pergunta02()
-        opcoes(correct[1]) # o parametro em opções corresponde a alternativa correta
+        opcoes(question, correct[1]) # o parametro em opções corresponde a alternativa correta
     elif question==2:
         pergunta.pergunta03()
-        opcoes(correct[2]) # o parametro em opções corresponde a alternativa correta
+        opcoes(question, correct[2]) # o parametro em opções corresponde a alternativa correta
     elif question==3:
         pergunta.pergunta04()
-        opcoes(correct[3]) # o parametro em opções corresponde a alternativa correta
+        opcoes(question, correct[3]) # o parametro em opções corresponde a alternativa correta
     elif question==4:
         pergunta.pergunta05()
-        opcoes(correct[4]) # o parametro em opções corresponde a alternativa correta
+        opcoes(question, correct[4]) # o parametro em opções corresponde a alternativa correta
         
 def mensagem_menu():
         # Teste OLED
