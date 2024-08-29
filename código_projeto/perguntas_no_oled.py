@@ -63,7 +63,7 @@ notas = {
 
 # Música "Super Mario Bros" - Parte Inicial
 musica_super_mario = [
-    ('E4',5),('E4',8),('E4',10),('C4',4),('E4',8),('G4',20),('G3',16)]
+    ('E4',6),('E4',8),('E4',10),('C4',4),('E4',11),('G4',24),('G3',16)]
 tempo_mario = 24
 volume = 1000 # Era 32768
 # ===========================  DEFINIÇÃO DE CONSTANTES =========================
