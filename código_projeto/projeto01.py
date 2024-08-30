@@ -1,15 +1,13 @@
 from machine import Pin, ADC, PWM, SoftI2C
 from ssd1306 import SSD1306_I2C
 import neopixel, time, utime
+from pergunta_resposta import Question
 
 # ==========================  INICIALIZACAO DE PERIFERICOS =========================
 adc_vrx = ADC(Pin(26)) # inicializa pino VRx (GPIO26)
 adc_vry = ADC(Pin(27)) # inicializa pino VRx (GPIO27)
 button_a = Pin(5, Pin.IN, Pin.PULL_UP) # configura botao A
 button_b = Pin(6, Pin.IN, Pin.PULL_UP) # configura botao B
-led_red = PWM(Pin(13)) # inicializa LED RGB no pino GP13
-led_green = PWM(Pin(12)) # inicializa LED RGB no pino GP12
-#led_blue = PWM(Pin(14)) # inicializa no pino GP14, nao pode, sera usado por oled
 i2c = SoftI2C(scl=Pin(15), sda=Pin(14)) # configura Display oled no GP14
 oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
 NUM_LEDS = 25 # Número de LEDs na sua matriz 5x5
@@ -37,28 +35,29 @@ E = [23,22,21,16,13,6,3,1,12,2]
 
 alternativa = [A,B,C,D,E]
 
+#Dicionário para escolha das alternativas corretas
+resposta = {'A': 0,
+            'B': 1,
+            'C': 2,
+            'D': 3,
+            'E': 4}
+
+#Leds correspondente ao rostinho feliz e triste na Matriz de Leds
 rosto_feliz = [6,8,15,23,22,21,19]
 rosto_triste = [6,8,24,16,17,18,20]
 
 # Frequências das notas musicais (escala temperada)
 notas = {
     'C4': 261,
-    'D4': 294,
     'E4': 329,
-    'F4': 349,
     'G4': 392,
-    'A4': 440,
-    'B4': 494,
-    'C5': 523,
-    'G3': 196,  # Sol uma oitava abaixo
-    'A#4': 466, # Lá sustenido
-    'PAUSA': 0
+    'G3': 196  # Sol uma oitava abaixo
 }
 
 # Música "Super Mario Bros" - Parte Inicial
 musica_super_mario = [
     ('E4',6),('E4',8),('E4',10),('C4',4),('E4',11),('G4',24),('G3',16)]
-tempo_mario = 32
+tempo_mario = 24
 volume = 1000 # Era 32768
 # ===========================  DEFINIÇÃO DE CONSTANTES =========================
 
@@ -77,6 +76,7 @@ def tocar_musica(musica):
 def limpa_matriz_leds():
     for i in range(NUM_LEDS):
         np[i] = (0, 0, 0)
+        np.write()
 
 def preenche_matriz_led_zig_zag():
     for i in range(NUM_LEDS):
@@ -121,56 +121,19 @@ limpa_matriz_leds()
 rosto_feliz_piscando()
 time.sleep(3)
 
+#Eh necessário fazer essa configuração novamente porque o pino do oled coincide com o pino do buzzer
+i2c = SoftI2C(scl=Pin(15), sda=Pin(14)) # configura Display oled no GP14
+oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
+
 # ===========================  SEQUENCIA DE APRESENTAÇÃO ========================
 
 
-# =============================  CLASSE PARA PERGUNTAS ==========================
-class Question(): 
-    
-    def pergunta01(self):
-        # Suponha que a matriz de LED seja um gráfico com coordenadas (x,y), qual é o tipo de função apresentada? 
-        for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
+# =============================  PERGUNTAS E RESPOSTAS ==========================
 
-        question01 = [24, 16, 12, 8, 0]
+pergunta = Question(25)
+resp = Question(25)
 
-        for i in question01:
-            np[i] = (2, 2, 2)
-            np.write()
-    
-    def pergunta02(self):
-        # Qual é a probabilidade de escolher um LED com a cor vermelha entre todas as cores apresentadas na matriz de LED?
-        for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
-
-        red = [0,2,5,7,8,12]
-        green = [1,3,4,6,9,15,18,19,20,21]
-        blue = [10,11,13,14,16,17,22,23,24]
-        
-        for i in red:
-            np[i] = (2, 0, 0)
-            np.write()
-        for i in green:
-            np[i] = (0, 2, 0)
-            np.write()
-        for i in blue:
-            np[i] = (0, 0, 2)
-            np.write()   
-                
-    def pergunta03(self):
-        
-        print("Espaço da Pergunta 03")
- 
-    def pergunta04(self):
-        
-        print("Espaço da Pergunta 04")
-        
-    def pergunta05(self):
-        
-        print("Espaço da Pergunta 05")            
-
-pergunta = Question()
-# =============================  CLASSE PARA PERGUNTAS ==========================
+# =============================  PERGUNTAS E RESPOSTAS ==========================
 
 
 # ===========================   ESCOLHA DAS ALTERNATIVAS =========================
@@ -191,6 +154,9 @@ def rosto_feliz_desenho():
     for i in rosto_feliz:
         np[i]=(0,2,0)
         np.write()
+    oled.fill(0)
+    oled.text("ACERTOOUUU",0,0)
+    oled.show()  
     time.sleep(2)
     limpa_matriz_leds()
         
@@ -198,15 +164,19 @@ def rosto_triste_desenho():
     for i in rosto_triste:
         np[i]=(2,0,0)
         np.write()
-    time.sleep(2)    
+        
+    oled.fill(0)
+    oled.text("ERROOUUUU",0,0)
+    oled.show()  
+    time.sleep(2)
     limpa_matriz_leds()
 
-def alternativa_correta(right_question):
-    for i in alternativa[right_question]:
+def desenha_alternativa(question):
+    for i in alternativa[question]:
         np[i] = (0, 2, 0)
         np.write()
-    
-def opcoes(alternativa_correta):
+  
+def opcoes(num_da_questao, alternativa_correta):
     escolha = True
     while escolha:
     # Ler valores analógicos de VRx e VRy
@@ -216,17 +186,16 @@ def opcoes(alternativa_correta):
 
     # Desligar todos os LEDs
         limpa_matriz_leds()
-        alternativa_correta(b)
+        desenha_alternativa(b)
+        resp.opcoes_oled(num_da_questao,b)
             
         if button_a.value() == 0:
             limpa_matriz_leds()
             if b==alternativa_correta:
                 rosto_feliz_desenho()
-                escolha = False
             else:
                 rosto_triste_desenho()
-                escolha = False
-                    
+            escolha = False        
         if button_b.value() == 0:
             escolha = False
     # Esperar um pouco antes da próxima leitura
@@ -235,27 +204,32 @@ def opcoes(alternativa_correta):
 
 
 # ============================== INTERFACE PRINCIPAL==============================
+
+respostas_corretas = ['A','C','B','E','D'] # Aqui escolhemos a sequência de respostas corretas da questão de 1 a 5
+
+correct = [resposta[respostas_corretas[0]],
+           resposta[respostas_corretas[1]],
+           resposta[respostas_corretas[2]],
+           resposta[respostas_corretas[3]],
+           resposta[respostas_corretas[4]]]
+
 def mostrando_pergunta(question):
     if question==0:
         pergunta.pergunta01()
-        time.sleep(10)
-        opcoes(0)
+        opcoes(question, correct[0])  # o parametro em opções corresponde a alternativa correta
     elif question==1:
         pergunta.pergunta02()
-        time.sleep(10)
-        opcoes(1)
+        opcoes(question, correct[1]) # o parametro em opções corresponde a alternativa correta
     elif question==2:
         pergunta.pergunta03()
-        time.sleep(10)
-        opcoes(2)
+        opcoes(question, correct[2]) # o parametro em opções corresponde a alternativa correta
     elif question==3:
         pergunta.pergunta04()
-        time.sleep(10)
-        opcoes(3)
+        opcoes(question, correct[3]) # o parametro em opções corresponde a alternativa correta
     elif question==4:
         pergunta.pergunta05()
-        time.sleep(10)
-        opcoes(4)
+        opcoes(question, correct[4]) # o parametro em opções corresponde a alternativa correta
+        
 def mensagem_menu():
         # Teste OLED
     oled.fill(0)  # Limpar display
@@ -281,5 +255,6 @@ while True:
     seleciona_pergunta(num_pergunta)
     
     # Esperar um pouco antes da próxima leitura
-    time.sleep(0.1)
+    time.sleep(0.15)
 # ============================== INTERFACE PRINCIPAL==============================
+
