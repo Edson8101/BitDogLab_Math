@@ -121,10 +121,6 @@ limpa_matriz_leds()
 rosto_feliz_piscando()
 time.sleep(3)
 
-#Eh necessário fazer essa configuração novamente porque o pino do oled coincide com o pino do buzzer
-i2c = SoftI2C(scl=Pin(15), sda=Pin(14)) # configura Display oled no GP14
-oled = SSD1306_I2C(128, 64, i2c) # configura Display oled 128x64 pixels
-
 # ===========================  SEQUENCIA DE APRESENTAÇÃO ========================
 
 
