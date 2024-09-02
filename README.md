@@ -12,7 +12,7 @@ O objetivo do projeto 1 da disciplina é familiarizar-se com a placa e ganhar au
 Esta primeira versão do BitDogLab_Math contém 5 perguntas com 5 alternativas cada. Primeiramente são exibidas animações quando o software iniciado. Em seguida seleciona-se a questão pode meio do joystick analógico com movimentos esquerda/direita, a questão é exibida no display Oled. Pressiona-se a tecla A para confirmar a escolha e então o gráfico da questão é exibido na matriz de LEDs por um tempo. Quando a contagem regressina no display Oled acaba, passa-se à seleção de alterativas para resposta. Então, com movimentos esquerda/direita no joystick a matriz de LEDs exibe as letras A até E correspondentes às alternativas, e simultaneamente o display Oled exibe o texto da resposta. O usuário confirma a seleção pressionando o botão A. Finalmente são exibidas na matrix de LEDs imagens :) ou :( dependendo se a resposta foi correta ou errada. Após isso o programa volta para a seleção de perguntas e o processo se repete indefinidamente. Para encerrar, deve-se pressionar 2 vezes o botão próximo à bateria na parte traseira da BitDogLab.<br><br>
 O fluxograma abaixo ilustra o funcionamento do programa:
 
-[<img src="./fluxograma.png" alt="Description of the image" width="500"/>](https://github.com/Edson8101/BitDogLab_Math/issues/1#issue-2500995584)
+![bitdoglab_plac](https://github.com/user-attachments/assets/756dcdd5-7c66-4085-9bf0-4e50287c2c9f)
 
 ## Itens da BNCC contemplados
 
