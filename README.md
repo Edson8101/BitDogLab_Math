@@ -7,12 +7,18 @@ BitDogLab_Math é um jogo de perguntas e respostas sobre matemática para a plac
 </details>
 O objetivo do projeto 1 da disciplina é familiarizar-se com a placa e ganhar autonomia para desenvolver o primeiro programa.<br><br>
 
+## Motivação
+
+O ensino da matemática é um desafio nas escolas brasileiras, tanto no ensino fundamental quanto no ensino médio. Segundo os dados de 2019 apresentados pelo Sistema de Avaliação do Ensino Básico (SAEB), uma taxa de apenas 5% dos estudantes da rede pública terminam o ensino médio com bons conhecimentos em matemática, apresentando uma preocupação com o ensino público mesmo antes da pandemia (G1, 2021). Tendo em vista contribuir neste desafio, este projeto traz o desenvolvimento de um software educacional com uso da placa BitDogLab (FRUETT, et al., 2024.) visando um complemento ao ensino de matemática em níveis de Ensino Fundamental (8º e 9º anos) e Ensino Médio.
+
 ## Manual de Instruções
 
 Esta primeira versão do BitDogLab_Math contém 5 perguntas com 5 alternativas cada. Primeiramente são exibidas animações quando o software iniciado. Em seguida seleciona-se a questão pode meio do joystick analógico com movimentos esquerda/direita, a questão é exibida no display Oled. Pressiona-se a tecla A para confirmar a escolha e então o gráfico da questão é exibido na matriz de LEDs por um tempo. Quando a contagem regressina no display Oled acaba, passa-se à seleção de alterativas para resposta. Então, com movimentos esquerda/direita no joystick a matriz de LEDs exibe as letras A até E correspondentes às alternativas, e simultaneamente o display Oled exibe o texto da resposta. O usuário confirma a seleção pressionando o botão A. Finalmente são exibidas na matrix de LEDs imagens :) ou :( dependendo se a resposta foi correta ou errada. Após isso o programa volta para a seleção de perguntas e o processo se repete indefinidamente. Para encerrar, deve-se pressionar 2 vezes o botão próximo à bateria na parte traseira da BitDogLab.<br><br>
 O fluxograma abaixo ilustra o funcionamento do programa:
 
+<div align="center">
 <img src="./fluxograma.png" alt="Description of the image" width="500"/>
+</div>
 
 ## Itens da BNCC contemplados
 
@@ -70,6 +76,11 @@ Descrever aqui o software
 
 ## Desafios 
 
+1. Elaborar questões consistentes na área da matemática de forma sucinta devido a limitação do display OLED, ou seja, basicamente tínhamos 80 caracteres por questão.
+2. Codificar a transição das interfaces.
+3. Criar interfaces de usuário intuitiva e atraente para o jogo de perguntas e respostas.
+
+
 ## Como instalar?
 
 1. Instale a IDE Thonny a partir de [https://thonny.org/](https://thonny.org/).
@@ -85,3 +96,15 @@ Descrever aqui o software
 11. Pronto, você pode desconectar a BitDogLab e o programa pode ser executado (ou reiniciado) apertando o botão próximo à bateria.
 
 ## Referências
+
+FRUETT, Fabiano; BARBOSA, F. P.; FRAGA, S. C. Z.; GUIMARÃES, P. I. A. Empowering STEAM Activities With Artificial Intelligence and Open Hardware: The BitDogLab. IEEE Transactions on Education, 2024.
+
+G1. Apenas 5% dos alunos da rede pública terminam o ensino médio com conhecimentos adequados de matemática. G1, 24 fev. 2021. Disponível em: https://g1.globo.com/educacao/noticia/2021/02/24/apenas-5percent-dos-alunos-da-rede-publica-terminam-o-ensino-medio-com-conhecimentos-adequados-de-matematica.ghtml. Acesso em: 18 de agosto de 2024.
+
+BRASIL. Ministério da Educação. Base Nacional Comum Curricular - Histórico. Disponível em: http://basenacionalcomum.mec.gov.br/historico . Acesso em: 18 ago. 2024.
+
+BRASIL. Ministério da Educação. Base Nacional Comum Curricular: educação infantil e ensino fundamental. Brasília: MEC, 2017. Disponível em: http://basenacionalcomum.mec.gov.br/images/BNCC_EI_EF_110518_versaofinal_site.pdf . Acesso em: 15 de agosto de 2024.
+
+BRASIL. Ministério da Educação. Base Nacional Comum Curricular - Computação Complemento à BNCC. Brasília: MEC, 2022. Disponível em: http://basenacionalcomum.mec.gov.br/images//historico/anexo_parecer_cneceb_n_2_2022_bncc_computacao.pdf . Acesso em: 18 ago. 2024.
+	
+COUTINHO, Dimítria. BNCC Computação: conheça o documento que orienta como levar tecnologia à sala de aula. Nova Escola, 13 jun. 2024. Disponível em: https://novaescola.org.br/conteudo/21884/entenda-bncc-computacional-tecnologia-educacao. Acesso em: 18 ago. 2024.
