@@ -1,4 +1,7 @@
 # BitDogLab_Math
+
+## Manual de Instruções
+
 BitDogLab_Math é um jogo de perguntas e respostas sobre matemática para a placa [BitDogLab](https://github.com/BitDogLab/BitDogLab). O jogo foi desenvolvido como projeto 1 da disciplina da FEEC/Unicamp IE323 - Sistemas Embarcados para ensino com abordagem STEM
 <details>
   <summary>Clique para saber mais sobre a disciplina.</summary>
@@ -10,6 +13,14 @@ Esta primeira versão do BitDogLab_Math contém 5 perguntas com 5 alternativas c
 O fluxograma abaixo ilustra o funcionamento do programa:
 
 <img src="./fluxograma.png" alt="Description of the image" width="500"/>
+
+## Hardware 
+
+Descrever aqui o hardware
+
+## Software 
+
+Descrever aqui o software
 
 ## Como instalar?
 
