@@ -52,7 +52,7 @@ Em 17 de fevereiro de 2022, o parecer CNE/CEB nº 2/2022 estabeleceu as normas s
 
 ## Hardware 
 
-O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto com uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico. A placa pode ser vista na figura abaixo. 
+O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto possuindo items de hardware como botões e leds que permitem a interação do usuário. Além disso, conta com contatos elétricos e conectores que permite a integração de uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico. A placa pode ser vista na figura abaixo. 
 
 <div align="center">
 <img src="https://github.com/user-attachments/assets/756dcdd5-7c66-4085-9bf0-4e50287c2c9f" width="400px" />
