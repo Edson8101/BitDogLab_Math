@@ -72,7 +72,21 @@ O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma pl
 
 ## Software 
 
-Descrever aqui o software
+O programa está dividido em dois arquivos perguntas_respostas.py, um código auxiliar e projeto01.py, o programa principal.
+perguntas_respostas.py contém a classe Question, onde se encontram os textos das perguntas e os textos das respostas.
+
+O script principal projeto01.py está organizado da seguinte forma:
+1. **Imports:** Importação de bibliotecas necessárias para o funcionamento.
+2. **Inicialização de periféricos:** Inicialização dos dispositivos de hardware da BitDogLab (botões, display, leds).
+3. **Constantes:**<br>
+Esta seção permite mudar o volume e a velocidade da música introdutória.<br>
+Contém desenhos que se usam na matriz de LEDs (letras, smiles) e notas da música introdutória.<br>
+
+5. **Funcoes para apresentação:** Funções com animações visuais e sonoras para serem usadas na introdução do jogo.
+6. **Sequencia de apresentação:** Parte que chama as funções de animação da introdução (quando se liga a placa).
+7. **Perguntas e Respostas:** Carregamento das questões a partir de pergunta_resposta.py para projeto01.py
+8. **Escolha de alternativas:** Contém funções de lógica e animações que ocorrem durante tela de resposta.
+9. **Interface Principal:** Parte com loop principal do programa, que se alterna entre telas de perguntas e respostas.
 
 ## Desafios 
 
