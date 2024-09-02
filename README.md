@@ -18,27 +18,27 @@ O fluxograma abaixo ilustra o funcionamento do programa:
 
 O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto com uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico.
 
-### Microcontrolador: RaspBerry Pi Pico
+1. **Microcontrolador: RaspBerry Pi Pico**
 
 O Raspberry Pi Pico é o cérebro do projeto, responsável por controlar os demais componentes e executar o código do jogo. Ele é programado em MicroPython e se comunica com todos os periféricos embarcados na BitDogLab.
 
-### Joystick
+2. **Joystick**
 
 O joystick é utilizado para navegação entre as questões e as alternativas do quiz. Sua função principal é permitir que o jogador possa pular para a próxima questão ou alternativa.
 
-### Matriz de LEDs 5x5
+3. **Matriz de LEDs 5x5**
 
 A matriz de LEDs 5x5 é usada para exibir desenhos simples relacionados às perguntas do quiz. Esses desenhos podem servir como ilustrações ou dicas visuais para as perguntas.
 
-### Display OLED
+4. **Display OLED**
 
 O display OLED é utilizado para apresentar as perguntas e alternativas textualmente. Ele exibe o conteúdo principal do jogo, como as perguntas e as opções de respostas.
 
-### Botões A e B
+5. **Botões A e B**
 
 Os botões A e B são usados como controles para confirmar a seleção de uma alternativa e para voltar a uma questão anterior ou desfazer uma escolha.
 
-### Buzzer 
+6. **Buzzer** 
 
 O buzzer é utilizado para gerar o som de animação da interface de apresentação.
 
