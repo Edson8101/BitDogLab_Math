@@ -14,9 +14,41 @@ O fluxograma abaixo ilustra o funcionamento do programa:
 
 <img src="./fluxograma.png" alt="Description of the image" width="500"/>
 
+## Itens da BNCC contemplados
+
+A Base Nacional Comum Curricular (BNCC) é um documento criado pelo Ministério da Educação (MEC) que estabelece as diretrizes e conteúdos essenciais que devem ser abordados nas escolas brasileiras, desde a educação infantil até o ensino médio. A criação da BNCC remonta à Constituição de 1988 que prevê em seu artigo 210 a Base Nacional Comum Curricular. Ao longo dos anos essa necessidade vem sendo discutida e amadurecida, e em 2015 foi publicada a primeira versão da BNCC. Mais recentemente, em 14 de dezembro de 2018, foi homologada pela ministra da educação Rossiele Soares a versão atual da BNCC, documento de 470 páginas que pode ser baixado em http://basenacionalcomum.mec.gov.br/ (BNCC - Histórico, 2024). O presente projeto visa contemplar os seguintes itens abordados na BNCC:
+
+1. (EM13MAT301) Resolver e elaborar problemas do cotidiano, da Matemática e de outras áreas do conhecimento, que envolvem equações lineares simultâneas, usando técnicas algébricas e gráficas, com ou sem apoio de tecnologias digitais.
+2. (EM13MAT302) Construir modelos empregando as funções polinomiais de 1º ou 2º graus, para resolver problemas em contextos diversos, com ou sem apoio de tecnologias digitais.
+3. (EM13MAT309) Resolver e elaborar problemas que envolvem o cálculo de áreas totais e de volumes de prismas, pirâmides e corpos redondos em situações reais (como o cálculo do gasto de material para revestimento ou pinturas de objetos cujos formatos sejam composições dos sólidos estudados), com ou sem apoio de tecnologias digitais.
+4. (EM13MAT405) Utilizar conceitos iniciais de uma linguagem de programação na implementação de algoritmos escritos em linguagem corrente e/ou matemática.
+
+Em 17 de fevereiro de 2022, o parecer CNE/CEB nº 2/2022 estabeleceu as normas sobre Computação na Educação Básica como um complemento à BNCC. Posteriormente, a Resolução CNE/CEB nº 1/2022, de 4 de outubro de 2022, reforçou essas normas, definindo os conteúdos e habilidades relacionados à Educação Digital que devem ser abordados nas escolas, o documento de 75 páginas ficou conhecido como BNCC Computação, que pode ser baixada em http://basenacionalcomum.mec.gov.br/historico (BNCC Histórico, 2024) (COUTINHO, 2024). O presente projeto relaciona-se à BNCC Computação, especificamente às habilidade do 8º e 9º anos do Ensino Fundamental, e ao Ensino Médio nos seguintes itens:
+
+* A criação do jogo e sua programação em MicroPython estimulam habilidades essenciais de Pensamento Computacional, como:
+  
+5. (EF08CO02): Criar soluções de problemas para os quais seja adequado o uso de listas para descrever suas informações e automatizá-las usando uma linguagem de programação, empregando ou não a recursão como uma técnica de resolver o problema.
+(EF09CO01): Criar soluções de problemas para os quais seja adequado o uso de árvores e grafos para descrever suas informações e automatizá-las usando uma linguagem de programação.
+6. (EF69CO02): Descrever a estrutura de um algoritmo e traduzi-lo para uma linguagem de programação.
+  
+* A lógica do jogo, com perguntas aleatórias, exige a aplicação de algoritmos, seleção condicional e repetições, conectando-se com as habilidades:
+  
+7. (EM13CO01): Explorar e construir a solução de problemas por meio da reutilização de partes de soluções existentes.
+8. (EM13CO02): Explorar e construir a solução de problemas por meio de refinamentos, utilizando diversos níveis de abstração desde a especificação até a implementação.
+  
+* O desenvolvimento do jogo e a interação com a plataforma BitDogLab abrem espaço para discutir:
+
+9. (EM13CO20): Criar conteúdos, disponibilizando-os em ambientes virtuais para publicação e compartilhamento, avaliando a confiabilidade e as consequências da disseminação dessas informações.
+  
+* A utilização de um sistema de quiz, com feedback imediato, incentiva a autonomia e o aprendizado de:
+10. (EM13CO15): Analisar a interação entre usuários e artefatos computacionais, abordando aspectos da experiência do usuário e promovendo reflexão sobre a qualidade do uso dos artefatos nas esferas do trabalho, do lazer e do estudo.
+
+
 ## Hardware 
 
-O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto com uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico.
+O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto com uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico. A placa pode ser vista na figura abaixo. 
+
+<img src="./fluxograma.png" alt="Description of the image" width="500"/>
 
 1. **Microcontrolador: RaspBerry Pi Pico**
 
@@ -46,6 +78,8 @@ O buzzer é utilizado para gerar o som de animação da interface de apresentaç
 
 Descrever aqui o software
 
+## Desafios 
+
 ## Como instalar?
 
 1. Instale a IDE Thonny a partir de [https://thonny.org/](https://thonny.org/).
@@ -59,3 +93,5 @@ Descrever aqui o software
 9. Agora, com a guia que contém `projeto01.py` ativa no Thonny vá em `Arquivo > Salvar como`.
 10. Quando a caixa de seleção aparecer com "Raspberry Pi e Computador", selecione Raspberry Pi, clique sobre `main.py` para sobrescrever.
 11. Pronto, você pode desconectar a BitDogLab e o programa pode ser executado (ou reiniciado) apertando o botão próximo à bateria.
+
+## Referências
