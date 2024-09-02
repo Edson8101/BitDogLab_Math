@@ -12,7 +12,7 @@ O objetivo do projeto 1 da disciplina é familiarizar-se com a placa e ganhar au
 Esta primeira versão do BitDogLab_Math contém 5 perguntas com 5 alternativas cada. Primeiramente são exibidas animações quando o software iniciado. Em seguida seleciona-se a questão pode meio do joystick analógico com movimentos esquerda/direita, a questão é exibida no display Oled. Pressiona-se a tecla A para confirmar a escolha e então o gráfico da questão é exibido na matriz de LEDs por um tempo. Quando a contagem regressina no display Oled acaba, passa-se à seleção de alterativas para resposta. Então, com movimentos esquerda/direita no joystick a matriz de LEDs exibe as letras A até E correspondentes às alternativas, e simultaneamente o display Oled exibe o texto da resposta. O usuário confirma a seleção pressionando o botão A. Finalmente são exibidas na matrix de LEDs imagens :) ou :( dependendo se a resposta foi correta ou errada. Após isso o programa volta para a seleção de perguntas e o processo se repete indefinidamente. Para encerrar, deve-se pressionar 2 vezes o botão próximo à bateria na parte traseira da BitDogLab.<br><br>
 O fluxograma abaixo ilustra o funcionamento do programa:
 
-![bitdoglab_plac](https://github.com/user-attachments/assets/756dcdd5-7c66-4085-9bf0-4e50287c2c9f)
+<img src="./fluxograma.png" alt="Description of the image" width="500"/>
 
 ## Itens da BNCC contemplados
 
@@ -48,31 +48,21 @@ Em 17 de fevereiro de 2022, o parecer CNE/CEB nº 2/2022 estabeleceu as normas s
 
 O projeto está autocontido na placa denominada BitDogLab. A BitDogLab é uma placa de desenvolvimento de código aberto com uma variedade de sensores e atuadores embutidos, facilitando a criação de projetos em sistemas embarcados. Ela é baseada no microcontrolador Raspberry Pi Pico. A placa pode ser vista na figura abaixo. 
 
-<img src="![bitdoglab_plac](https://github.com/user-attachments/assets/756dcdd5-7c66-4085-9bf0-4e50287c2c9f)" alt="Description of the image" width="500"/>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/756dcdd5-7c66-4085-9bf0-4e50287c2c9f" width="400px" />
+</div>
 
-1. **Microcontrolador: RaspBerry Pi Pico**
+1. **Microcontrolador: RaspBerry Pi Pico:** O Raspberry Pi Pico é o cérebro do projeto, responsável por controlar os demais componentes e executar o código do jogo. Ele é programado em MicroPython e se comunica com todos os periféricos embarcados na BitDogLab.
 
-O Raspberry Pi Pico é o cérebro do projeto, responsável por controlar os demais componentes e executar o código do jogo. Ele é programado em MicroPython e se comunica com todos os periféricos embarcados na BitDogLab.
+2. **Joystick:** O joystick é utilizado para navegação entre as questões e as alternativas do quiz. Sua função principal é permitir que o jogador possa pular para a próxima questão ou alternativa.
 
-2. **Joystick**
+3. **Matriz de LEDs 5x5:** A matriz de LEDs 5x5 é usada para exibir desenhos simples relacionados às perguntas do quiz. Esses desenhos podem servir como ilustrações ou dicas visuais para as perguntas.
 
-O joystick é utilizado para navegação entre as questões e as alternativas do quiz. Sua função principal é permitir que o jogador possa pular para a próxima questão ou alternativa.
+4. **Display OLED:** O display OLED é utilizado para apresentar as perguntas e alternativas textualmente. Ele exibe o conteúdo principal do jogo, como as perguntas e as opções de respostas.
 
-3. **Matriz de LEDs 5x5**
+5. **Botões A e B:** Os botões A e B são usados como controles para confirmar a seleção de uma alternativa e para voltar a uma questão anterior ou desfazer uma escolha.
 
-A matriz de LEDs 5x5 é usada para exibir desenhos simples relacionados às perguntas do quiz. Esses desenhos podem servir como ilustrações ou dicas visuais para as perguntas.
-
-4. **Display OLED**
-
-O display OLED é utilizado para apresentar as perguntas e alternativas textualmente. Ele exibe o conteúdo principal do jogo, como as perguntas e as opções de respostas.
-
-5. **Botões A e B**
-
-Os botões A e B são usados como controles para confirmar a seleção de uma alternativa e para voltar a uma questão anterior ou desfazer uma escolha.
-
-6. **Buzzer** 
-
-O buzzer é utilizado para gerar o som de animação da interface de apresentação.
+6. **Buzzer:** O buzzer é utilizado para gerar o som de animação da interface de apresentação.
 
 ## Software 
 
